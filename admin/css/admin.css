@@ -95,7 +95,7 @@
 /* Fintech Card Style */
 .fintech-card {
     border: none;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     color: #fff;
     overflow: hidden;
