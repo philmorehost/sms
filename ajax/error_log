@@ -1,0 +1,2 @@
+[30-Aug-2025 17:32:30 Africa/Lagos] PHP Warning:  Undefined variable $row in /home/appsms/public_html/app/helpers.php on line 376
+[30-Aug-2025 17:32:30 Africa/Lagos] PHP Warning:  Trying to access array offset on null in /home/appsms/public_html/app/helpers.php on line 376
