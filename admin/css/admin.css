@@ -39,7 +39,7 @@
     justify-content: space-between;
     height: 100%;
     padding: 1.5rem;
-    border-radius: 0.75rem; /* Standard rounded corners */
+    border-radius: 1.2rem; /* More prominent rounded corners */
     color: #fff; /* White text for colored backgrounds */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* A bit more pronounced shadow */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -91,7 +91,7 @@
     margin-top: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.2); /* Semi-transparent border */
     text-align: left;
-    color: rgba(255, 255, 255, 0.8);
+    color: #fff;
     text-decoration: none;
     transition: color 0.3s ease;
     font-weight: 500;
