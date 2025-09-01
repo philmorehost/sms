@@ -31,73 +31,74 @@
     color: #1a1a1a !important;
 }
 
-/* Fintech-style Statistics Box */
+/* Modern Fintech-style Statistics Box (Light Theme) */
 .stat-box {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%; /* Ensures all cards in a row are the same height */
+    height: 100%;
     padding: 1.5rem;
-    border-radius: 0.75rem;
-    color: #fff;
-    overflow: hidden;
+    border-radius: 1rem; /* More pronounced rounded corners */
+    color: #343a40; /* Darker text for light background */
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Softer, more subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--stat-bg-start, #4a4a4a) 0%, var(--stat-bg-end, #3c3c3c) 100%);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .stat-box:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-color: #dee2e6;
 }
 
-/* Define background gradients for each card type */
-.stat-box.bg-primary { --stat-bg-start: #0d6efd; --stat-bg-end: #0a58ca; }
-.stat-box.bg-success { --stat-bg-start: #198754; --stat-bg-end: #146c43; }
-.stat-box.bg-info { --stat-bg-start: #0dcaf0; --stat-bg-end: #0aa3c2; }
-.stat-box.bg-warning { --stat-bg-start: #ffc107; --stat-bg-end: #d39e00; }
-
 .stat-box .inner h3 {
-    font-size: 2.2rem;
-    font-weight: 600;
-    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
     padding: 0;
+    color: #212529;
 }
 
 .stat-box .inner p {
-    font-size: 0.95rem;
+    font-size: 1rem;
     margin: 0;
-    opacity: 0.9;
+    color: #6c757d; /* Muted text color for the description */
 }
 
 .stat-box .icon {
     position: absolute;
     top: 1.5rem;
     right: 1.5rem;
-    font-size: 3rem;
-    opacity: 0.2;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-size: 2.5rem;
+    transition: transform 0.3s ease;
 }
 
+/* Set icon colors based on the card's theme */
+.stat-box.bg-primary .icon { color: rgba(13, 110, 253, 0.2); }
+.stat-box.bg-success .icon { color: rgba(25, 135, 84, 0.2); }
+.stat-box.bg-info .icon { color: rgba(13, 202, 240, 0.25); }
+.stat-box.bg-warning .icon { color: rgba(255, 193, 7, 0.25); }
+
+
 .stat-box:hover .icon {
-    opacity: 0.3;
-    transform: rotate(-10deg);
+    transform: scale(1.1);
 }
 
 .stat-box-footer {
     display: block;
     padding-top: 0.75rem;
-    margin-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: 1.5rem;
+    border-top: 1px solid #f1f3f5;
     text-align: left;
-    color: rgba(255, 255, 255, 0.8);
+    color: #6c757d;
     text-decoration: none;
     transition: color 0.3s ease;
-    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .stat-box-footer:hover {
-    color: #fff;
+    color: #0d6efd; /* Highlight on hover */
 }
