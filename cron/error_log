@@ -1,0 +1,17 @@
+[31-Aug-2025 04:46:05 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Too many connections in /home/appsms/public_html/app/bootstrap.php:20
+Stack trace:
+#0 /home/appsms/public_html/app/bootstrap.php(20): mysqli->__construct()
+#1 /home/appsms/public_html/cron/process_scheduled_emails.php(3): require_once('/home/appsms/pu...')
+#2 {main}
+  thrown in /home/appsms/public_html/app/bootstrap.php on line 20
+[31-Aug-2025 04:46:05 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Too many connections in /home/appsms/public_html/app/bootstrap.php:20
+Stack trace:
+#0 /home/appsms/public_html/app/bootstrap.php(20): mysqli->__construct()
+#1 /home/appsms/public_html/cron/process_scheduled_tasks.php(8): require_once('/home/appsms/pu...')
+#2 {main}
+  thrown in /home/appsms/public_html/app/bootstrap.php on line 20
+[31-Aug-2025 21:55:05 Africa/Lagos] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'api_response' in 'field list' in /home/appsms/public_html/cron/check_sender_id_status.php:68
+Stack trace:
+#0 /home/appsms/public_html/cron/check_sender_id_status.php(68): mysqli->prepare()
+#1 {main}
+  thrown in /home/appsms/public_html/cron/check_sender_id_status.php on line 68
