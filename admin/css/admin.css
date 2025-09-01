@@ -33,7 +33,7 @@
     position: relative;
     display: block;
     padding: 20px;
-    border-radius: 0.25rem; /* Slight rounding, classic look */
+    border-radius: 0.75rem; /* Rounded corners */
     color: #fff;
     margin-bottom: 1.5rem;
 }
