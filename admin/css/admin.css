@@ -91,3 +91,66 @@
 .stat-box.bg-success { background-color: #198754 !important; }
 .stat-box.bg-info { background-color: #0dcaf0 !important; }
 .stat-box.bg-secondary { background-color: #6c757d !important; }
+
+/* Fintech Card Style */
+.fintech-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fintech-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.fintech-card .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    position: relative;
+    z-index: 2;
+}
+
+.fintech-card h3 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.fintech-card p {
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.fintech-card .icon {
+    font-size: 4rem;
+    opacity: 1;
+    position: static;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.fintech-card .stat-box-footer {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 0;
+}
+
+.fintech-card.bg-primary {
+    background: linear-gradient(135deg, #0d6efd, #0a58ca);
+}
+.fintech-card.bg-success {
+    background: linear-gradient(135deg, #198754, #146c43);
+}
+.fintech-card.bg-info {
+    background: linear-gradient(135deg, #0dcaf0, #0aa3c2);
+}
+.fintech-card.bg-secondary {
+    background: linear-gradient(135deg, #6c757d, #5a6268);
+}
