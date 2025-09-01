@@ -5,10 +5,10 @@ require_once 'app/bootstrap.php';
 include 'includes/header.php';
 ?>
 <style>
-    .api-endpoint { border-left: 3px solid var(--primary-color); padding-left: 1rem; margin-bottom: 2rem; }
+    .api-endpoint { border-left: 3px solid #0d6efd; padding-left: 1rem; margin-bottom: 2rem; }
     .api-endpoint .method { font-weight: 600; }
-    .api-endpoint .url { font-family: monospace; background-color: var(--light-color); padding: 0.2rem 0.5rem; border-radius: 4px; }
-    pre { background-color: var(--dark-color); color: #fff; padding: 1rem; border-radius: 0.5rem; }
+    .api-endpoint .url { font-family: monospace; background-color: #e9ecef; color: #212529; padding: 0.2rem 0.5rem; border-radius: 4px; }
+    pre { background-color: #212529; color: #fff; padding: 1rem; border-radius: 0.5rem; }
     code { font-family: monospace; }
 </style>
 

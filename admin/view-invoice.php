@@ -137,9 +137,26 @@ include 'includes/header.php';
             </div>
         </div>
     </div>
-    <div class="card-footer text-center">
-        <!-- Admin actions will go here in a future step -->
-        <strong class="text-muted">Admin Actions (Approve/Reject/Delete) will be added here.</strong>
+    <div class="card-footer text-end">
+        <form action="ajax/manage_invoice.php" method="POST" class="d-inline">
+            <input type="hidden" name="invoice_id" value="<?php echo $invoice['id']; ?>">
+
+            <?php if ($invoice['status'] !== 'paid'): ?>
+                <button type="submit" name="action" value="approve" class="btn btn-success">
+                    <i class="fas fa-check-circle"></i> Approve
+                </button>
+            <?php endif; ?>
+
+            <?php if ($invoice['status'] !== 'cancelled'): ?>
+                <button type="submit" name="action" value="reject" class="btn btn-warning">
+                    <i class="fas fa-times-circle"></i> Reject
+                </button>
+            <?php endif; ?>
+
+            <button type="submit" name="action" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this invoice? This action cannot be undone.');">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+        </form>
     </div>
 </div>
 

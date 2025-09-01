@@ -146,6 +146,38 @@ $banner_stmt->close();
 
     <!-- Stats Column -->
     <div class="col-lg-5 col-xl-4 mb-4">
+        <!-- Banner Ads Slider -->
+        <?php if (!empty($banner_ads)): ?>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0"><i class="fas fa-images"></i> Promotions</h5>
+            </div>
+            <div class="card-body">
+                <div id="bannerCarousel" class="carousel slide banner-slider" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <?php foreach ($banner_ads as $index => $banner): ?>
+                        <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                            <a href="<?php echo htmlspecialchars($banner['link']); ?>" target="_blank">
+                                <img src="<?php echo htmlspecialchars($banner['image_path']); ?>" class="d-block w-100" alt="Banner Ad">
+                            </a>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php if (count($banner_ads) > 1): ?>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
         <div class="row g-3">
             <div class="col-12 col-md-6 col-lg-12">
                 <div class="stat-card">
@@ -185,8 +217,8 @@ $banner_stmt->close();
 </div>
 
 <div class="row">
-    <!-- Activity Chart -->
-    <div class="col-lg-8 mb-4">
+    <!-- Recent Activity and Transactions -->
+    <div class="col-lg-7 mb-4">
         <div class="card h-100">
             <div class="card-header">
                 <h5 class="card-title mb-0"><i class="fas fa-chart-line"></i> Recent Activity</h5>
@@ -197,77 +229,38 @@ $banner_stmt->close();
         </div>
     </div>
 
-    <!-- Banner Ads Slider -->
-    <?php if (!empty($banner_ads)): ?>
-    <div class="col-lg-4 mb-4">
+    <div class="col-lg-5 mb-4">
         <div class="card h-100">
             <div class="card-header">
-                <h5 class="card-title mb-0"><i class="fas fa-images"></i> Promotions</h5>
-            </div>
-            <div class="card-body">
-                <div id="bannerCarousel" class="carousel slide banner-slider" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <?php foreach ($banner_ads as $index => $banner): ?>
-                        <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                            <a href="<?php echo htmlspecialchars($banner['link']); ?>" target="_blank">
-                                <img src="<?php echo htmlspecialchars($banner['image_path']); ?>" class="d-block w-100" alt="Banner Ad">
-                            </a>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <?php if (count($banner_ads) > 1): ?>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php endif; ?>
-</div>
-
-<div class="row">
-    <!-- Recent Transactions -->
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Recent Transactions</h3>
+                <h5 class="card-title mb-0"><i class="fas fa-history"></i> Recent Transactions</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th style="width: 10px">#</th>
-                            <th>Date</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Status</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (empty($recent_transactions)): ?>
-                                <tr><td colspan="5" class="text-center">No recent transactions.</td></tr>
+                                <tr><td colspan="4" class="text-center">No recent transactions.</td></tr>
                             <?php else: ?>
-                                <?php foreach ($recent_transactions as $index => $txn): ?>
+                                <?php foreach ($recent_transactions as $txn): ?>
                                 <tr>
-                                    <td><?php echo $index + 1; ?>.</td>
-                                    <td><?php echo date('Y-m-d H:i', strtotime($txn['created_at'])); ?></td>
+                                    <td><?php echo date('M d, Y', strtotime($txn['created_at'])); ?></td>
                                     <td><?php echo htmlspecialchars($txn['description']); ?></td>
-                                    <td><?php echo get_currency_symbol(); ?><?php echo number_format($txn['amount'], 2); ?></td>
+                                    <td class="text-nowrap"><?php echo get_currency_symbol(); ?><?php echo number_format($txn['amount'], 2); ?></td>
                                     <td>
                                         <?php
                                             $status = htmlspecialchars($txn['status']);
                                             $badge_class = 'bg-secondary';
-                                            if ($status == 'completed') $badge_class = 'bg-success';
-                                            if ($status == 'failed' || $status == 'cancelled') $badge_class = 'bg-danger';
-                                            if ($status == 'pending') $badge_class = 'bg-warning';
+                                            if (in_array($status, ['completed', 'success'])) $badge_class = 'bg-success';
+                                            elseif (in_array($status, ['failed', 'cancelled'])) $badge_class = 'bg-danger';
+                                            elseif ($status === 'pending') $badge_class = 'bg-warning';
                                             echo "<span class='badge " . $badge_class . "'>" . ucfirst($status) . "</span>";
                                         ?>
                                     </td>

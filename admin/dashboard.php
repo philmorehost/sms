@@ -27,8 +27,8 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
 ?>
 
 <div class="row">
-    <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box bg-primary">
+    <div class="col-lg-3 col-md-6">
+        <div class="stat-box bg-primary text-white">
             <div class="inner">
                 <h3><?php echo $total_users; ?></h3>
                 <p>Total Users</p>
@@ -39,8 +39,8 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
             <a href="users.php" class="stat-box-footer">Manage Users <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box bg-success">
+    <div class="col-lg-3 col-md-6">
+        <div class="stat-box bg-success text-white">
             <div class="inner">
                 <h3><?php echo $total_messages; ?></h3>
                 <p>Messages Sent</p>
@@ -51,8 +51,8 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
             <a href="reports.php" class="stat-box-footer">View Reports <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box bg-info">
+    <div class="col-lg-3 col-md-6">
+        <div class="stat-box bg-info text-white">
             <div class="inner">
                 <h3><?php echo $total_groups; ?></h3>
                 <p>Contact Groups</p>
@@ -63,10 +63,11 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
             <a href="#" class="stat-box-footer">View Details <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box bg-secondary">
+    <div class="col-lg-3 col-md-6">
+        <div class="stat-box bg-warning text-white">
             <div class="inner">
                 <h3><?php echo $total_contacts; ?></h3>
+.
                 <p>Total Contacts</p>
             </div>
             <div class="icon">
