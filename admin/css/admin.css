@@ -31,7 +31,7 @@
     color: #1a1a1a !important;
 }
 
-/* Modern Fintech-style Statistics Box (Light Theme) */
+/* Modern Fintech-style Statistics Box (Colored Backgrounds) */
 .stat-box {
     position: relative;
     display: flex;
@@ -39,19 +39,24 @@
     justify-content: space-between;
     height: 100%;
     padding: 1.5rem;
-    border-radius: 1rem; /* More pronounced rounded corners */
-    color: #343a40; /* Darker text for light background */
-    background-color: #fff;
-    border: 1px solid #e9ecef;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Softer, more subtle shadow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-radius: 0.75rem; /* Standard rounded corners */
+    color: #fff; /* White text for colored backgrounds */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* A bit more pronounced shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 1rem;
+    border: none; /* No border for this design */
 }
+
+/* Define solid background colors */
+.stat-box.bg-primary { background-color: #0d6efd; }
+.stat-box.bg-success { background-color: #198754; }
+.stat-box.bg-info { background-color: #0dcaf0; }
+.stat-box.bg-warning { background-color: #ffc107; }
+
 
 .stat-box:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    border-color: #dee2e6;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .stat-box .inner h3 {
@@ -59,46 +64,39 @@
     font-weight: 700;
     margin: 0 0 0.25rem 0;
     padding: 0;
-    color: #212529;
 }
 
 .stat-box .inner p {
     font-size: 1rem;
     margin: 0;
-    color: #343a40; /* Darker text for better readability */
+    opacity: 0.9;
 }
 
 .stat-box .icon {
     position: absolute;
     top: 1.5rem;
     right: 1.5rem;
-    font-size: 2.5rem;
+    font-size: 3.5rem;
+    opacity: 0.2;
     transition: transform 0.3s ease;
 }
 
-/* Set icon colors based on the card's theme */
-.stat-box.bg-primary .icon { color: rgba(13, 110, 253, 0.2); }
-.stat-box.bg-success .icon { color: rgba(25, 135, 84, 0.2); }
-.stat-box.bg-info .icon { color: rgba(13, 202, 240, 0.25); }
-.stat-box.bg-warning .icon { color: rgba(255, 193, 7, 0.25); }
-
-
 .stat-box:hover .icon {
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(-5deg);
 }
 
 .stat-box-footer {
     display: block;
     padding-top: 0.75rem;
     margin-top: 1.5rem;
-    border-top: 1px solid #f1f3f5;
+    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Semi-transparent border */
     text-align: left;
-    color: #343a40;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     transition: color 0.3s ease;
     font-weight: 500;
 }
 
 .stat-box-footer:hover {
-    color: #0d6efd; /* Highlight on hover */
+    color: #fff;
 }
