@@ -17,86 +17,77 @@
     flex: 0 0 auto;
 }
 
-/* Fix for badge text color on light backgrounds for better contrast */
+/* Fix for badge text color on light backgrounds */
 .badge.bg-warning,
 .badge.bg-info,
 .badge.bg-light,
 .badge.bg-secondary,
-.badge.bg-success,
 .badge-warning,
 .badge-info,
-.badge-secondary,
-.badge-light,
-.badge-success {
-    color: #1a1a1a !important;
+.badge-secondary {
+    color: #212529 !important;
 }
 
-/* Modern Fintech-style Statistics Box (Colored Backgrounds) */
+/* Classic Admin Stat Box Style */
 .stat-box {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    padding: 1.5rem;
-    border-radius: 1.2rem; /* More prominent rounded corners */
-    color: #fff; /* White text for colored backgrounds */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* A bit more pronounced shadow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 1rem;
-    border: none; /* No border for this design */
+    display: block;
+    padding: 20px;
+    border-radius: 0.25rem; /* Slight rounding, classic look */
+    color: #fff;
+    margin-bottom: 1.5rem;
 }
 
-/* Define solid background colors */
-.stat-box.bg-primary { background-color: #0d6efd; }
-.stat-box.bg-success { background-color: #198754; }
-.stat-box.bg-info { background-color: #0dcaf0; }
-.stat-box.bg-warning { background-color: #ffc107; }
-
-
-.stat-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+.stat-box .inner {
+    position: relative;
+    z-index: 10;
 }
 
-.stat-box .inner h3 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0 0 0.25rem 0;
+.stat-box h3 {
+    font-size: 38px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
     padding: 0;
+    white-space: nowrap;
 }
 
-.stat-box .inner p {
-    font-size: 1rem;
-    margin: 0;
-    opacity: 0.9;
+.stat-box p {
+    font-size: 15px;
 }
 
 .stat-box .icon {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    font-size: 3.5rem;
-    opacity: 0.2;
-    transition: transform 0.3s ease;
+    top: auto;
+    bottom: 10px;
+    right: 15px;
+    z-index: 0;
+    font-size: 70px;
+    color: rgba(0, 0, 0, 0.15);
+    transition: all .3s linear;
 }
 
 .stat-box:hover .icon {
-    transform: scale(1.1) rotate(-5deg);
+    font-size: 75px;
 }
 
 .stat-box-footer {
-    display: block;
-    padding-top: 0.75rem;
-    margin-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Semi-transparent border */
-    text-align: left;
+    position: relative;
+    text-align: center;
+    padding: 3px 0;
     color: #fff;
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.1);
     text-decoration: none;
-    transition: color 0.3s ease;
-    font-weight: 500;
 }
 
 .stat-box-footer:hover {
     color: #fff;
+    background: rgba(0, 0, 0, 0.15);
 }
+
+.stat-box.bg-primary { background-color: #0d6efd !important; }
+.stat-box.bg-success { background-color: #198754 !important; }
+.stat-box.bg-info { background-color: #0dcaf0 !important; }
+.stat-box.bg-secondary { background-color: #6c757d !important; }

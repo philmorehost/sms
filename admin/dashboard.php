@@ -26,9 +26,9 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
 
 ?>
 
-<div class="row d-flex align-items-stretch mb-4">
+<div class="row">
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box bg-primary text-white">
+        <div class="stat-box bg-primary">
             <div class="inner">
                 <h3><?php echo $total_users; ?></h3>
                 <p>Total Users</p>
@@ -40,7 +40,7 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
         </div>
     </div>
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box bg-success text-white">
+        <div class="stat-box bg-success">
             <div class="inner">
                 <h3><?php echo $total_messages; ?></h3>
                 <p>Messages Sent</p>
@@ -52,7 +52,7 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
         </div>
     </div>
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box bg-info text-white">
+        <div class="stat-box bg-info">
             <div class="inner">
                 <h3><?php echo $total_groups; ?></h3>
                 <p>Contact Groups</p>
@@ -64,7 +64,7 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
         </div>
     </div>
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box bg-warning text-white">
+        <div class="stat-box bg-secondary">
             <div class="inner">
                 <h3><?php echo $total_contacts; ?></h3>
                 <p>Total Contacts</p>
@@ -78,7 +78,7 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
 </div>
 
 <div class="row">
-    <div class="col-lg-6 mb-4">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Recent User Registrations</h3>
@@ -89,78 +89,28 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
                         <thead>
                             <tr>
                                 <th>Username</th>
-                                <th>Email</th>
-                                <th>Registered</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Registration Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $stmt_users = $conn->prepare("SELECT username, email, created_at FROM users WHERE is_admin = 0 ORDER BY created_at DESC LIMIT 10");
-                            if ($stmt_users) {
-                                $stmt_users->execute();
-                                $recent_users_result = $stmt_users->get_result();
+                            $stmt = $conn->prepare("SELECT username, email, phone_number, created_at FROM users WHERE is_admin = 0 ORDER BY created_at DESC LIMIT 5");
+                            if ($stmt) {
+                                $stmt->execute();
+                                $recent_users_result = $stmt->get_result();
                                 while ($row = $recent_users_result->fetch_assoc()):
                             ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($row['username']); ?></td>
                                 <td><?php echo htmlspecialchars($row['email']); ?></td>
-                                <td><?php echo date('Y-m-d', strtotime($row['created_at'])); ?></td>
+                                <td><?php echo htmlspecialchars($row['phone_number']); ?></td>
+                                <td><?php echo $row['created_at']; ?></td>
                             </tr>
                             <?php
                                 endwhile;
-                                $stmt_users->close();
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 mb-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Recent Transactions</h3>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Amount</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $stmt_trans = $conn->prepare("SELECT t.*, u.username FROM transactions t JOIN users u ON t.user_id = u.id ORDER BY t.created_at DESC LIMIT 10");
-                            if ($stmt_trans) {
-                                $stmt_trans->execute();
-                                $recent_trans_result = $stmt_trans->get_result();
-                                while ($row = $recent_trans_result->fetch_assoc()):
-                            ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['username']); ?></td>
-                                <td><?php echo get_currency_symbol() . number_format($row['amount'], 2); ?></td>
-                                <td><?php echo ucfirst(str_replace('_', ' ', $row['type'])); ?></td>
-                                <td>
-                                     <?php
-                                        $status = strtolower($row['status']);
-                                        $badge_class = 'bg-secondary';
-                                        if (in_array($status, ['completed', 'success', 'approved'])) $badge_class = 'bg-success';
-                                        elseif (in_array($status, ['failed', 'cancelled', 'rejected'])) $badge_class = 'bg-danger';
-                                        elseif ($status === 'pending') $badge_class = 'bg-warning';
-                                        echo '<span class="badge ' . $badge_class . '">' . htmlspecialchars(ucfirst($status)) . '</span>';
-                                    ?>
-                                </td>
-                                <td><?php echo date('Y-m-d', strtotime($row['created_at'])); ?></td>
-                            </tr>
-                            <?php
-                                endwhile;
-                                $stmt_trans->close();
+                                $stmt->close();
                             }
                             ?>
                         </tbody>
