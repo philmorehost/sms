@@ -28,60 +28,56 @@ $total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_con
 
 <div class="row">
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box fintech-card bg-primary">
-            <div class="inner">
-                <div>
-                    <h3><?php echo $total_users; ?></h3>
-                    <p>Total Users</p>
-                </div>
-                <div class="icon">
+        <a href="users.php" class="stat-card-link">
+            <div class="stat-card">
+                <div class="stat-icon bg-primary">
                     <i class="fas fa-users"></i>
                 </div>
+                <div class="stat-info">
+                    <p class="stat-label">Total Users</p>
+                    <h5 class="stat-value"><?php echo $total_users; ?></h5>
+                </div>
             </div>
-            <a href="users.php" class="stat-box-footer">Manage Users <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
+        </a>
     </div>
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box fintech-card bg-success">
-            <div class="inner">
-                <div>
-                    <h3><?php echo $total_messages; ?></h3>
-                    <p>Messages Sent</p>
-                </div>
-                <div class="icon">
+        <a href="reports.php" class="stat-card-link">
+            <div class="stat-card">
+                <div class="stat-icon bg-success">
                     <i class="fas fa-paper-plane"></i>
                 </div>
+                <div class="stat-info">
+                    <p class="stat-label">Messages Sent</p>
+                    <h5 class="stat-value"><?php echo $total_messages; ?></h5>
+                </div>
             </div>
-            <a href="reports.php" class="stat-box-footer">View Reports <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
+        </a>
     </div>
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box fintech-card bg-info">
-            <div class="inner">
-                <div>
-                    <h3><?php echo $total_groups; ?></h3>
-                    <p>Contact Groups</p>
-                </div>
-                <div class="icon">
+        <a href="#" class="stat-card-link">
+            <div class="stat-card">
+                <div class="stat-icon bg-info">
                     <i class="fas fa-address-book"></i>
                 </div>
+                <div class="stat-info">
+                    <p class="stat-label">Contact Groups</p>
+                    <h5 class="stat-value"><?php echo $total_groups; ?></h5>
+                </div>
             </div>
-            <a href="#" class="stat-box-footer">View Details <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
+        </a>
     </div>
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="stat-box fintech-card bg-secondary">
-            <div class="inner">
-                <div>
-                    <h3><?php echo $total_contacts; ?></h3>
-                    <p>Total Contacts</p>
-                </div>
-                <div class="icon">
+        <a href="#" class="stat-card-link">
+            <div class="stat-card">
+                <div class="stat-icon bg-secondary">
                     <i class="fas fa-book"></i>
                 </div>
+                <div class="stat-info">
+                    <p class="stat-label">Total Contacts</p>
+                    <h5 class="stat-value"><?php echo $total_contacts; ?></h5>
+                </div>
             </div>
-            <a href="#" class="stat-box-footer">View Details <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
+        </a>
     </div>
 </div>
 
