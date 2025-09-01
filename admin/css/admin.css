@@ -31,66 +31,71 @@
     color: #1a1a1a !important;
 }
 
-/* Statistics Box Styles */
+/* Fintech-style Statistics Box */
 .stat-box {
     position: relative;
-    display: block;
-    padding: 20px;
-    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Ensures all cards in a row are the same height */
+    padding: 1.5rem;
+    border-radius: 0.75rem;
     color: #fff;
     overflow: hidden;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--stat-bg-start, #4a4a4a) 0%, var(--stat-bg-end, #3c3c3c) 100%);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .stat-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
-.stat-box .inner {
-    padding-right: 80px; /* Space for the icon */
-}
+/* Define background gradients for each card type */
+.stat-box.bg-primary { --stat-bg-start: #0d6efd; --stat-bg-end: #0a58ca; }
+.stat-box.bg-success { --stat-bg-start: #198754; --stat-bg-end: #146c43; }
+.stat-box.bg-info { --stat-bg-start: #0dcaf0; --stat-bg-end: #0aa3c2; }
+.stat-box.bg-warning { --stat-bg-start: #ffc107; --stat-bg-end: #d39e00; }
 
-.stat-box h3 {
-    font-size: 2.5rem;
-    font-weight: 700;
+.stat-box .inner h3 {
+    font-size: 2.2rem;
+    font-weight: 600;
     margin: 0;
     padding: 0;
-    white-space: nowrap;
 }
 
-.stat-box p {
-    font-size: 1rem;
+.stat-box .inner p {
+    font-size: 0.95rem;
     margin: 0;
-    padding: 0;
+    opacity: 0.9;
 }
 
 .stat-box .icon {
     position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    font-size: 60px;
-    opacity: 0.3;
-    transition: all 0.3s ease;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 3rem;
+    opacity: 0.2;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .stat-box:hover .icon {
-    opacity: 0.5;
-    transform: translateY(-50%) scale(1.1);
+    opacity: 0.3;
+    transform: rotate(-10deg);
 }
 
 .stat-box-footer {
     display: block;
-    padding: 10px 0 0 0;
-    margin-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: center;
+    padding-top: 0.75rem;
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: left;
     color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     transition: color 0.3s ease;
+    font-size: 0.9rem;
 }
 
 .stat-box-footer:hover {

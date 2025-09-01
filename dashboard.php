@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             if (data.success) {
                 new Chart(ctx, {
-                    type: 'line',
+                    type: 'bar',
                     data: data.chartData,
                     options: {
                         responsive: true,
