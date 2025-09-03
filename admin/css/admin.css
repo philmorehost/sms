@@ -28,52 +28,66 @@
     color: #212529 !important;
 }
 
-/* Stats Cards */
-.stat-card-link {
-    text-decoration: none;
-    color: inherit;
+/* Classic Admin Stat Box Style */
+.stat-box {
+    position: relative;
     display: block;
-    height: 100%;
-}
-.stat-card-link:hover .stat-card {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.stat-card {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #e3e3e3;
-    height: 100%;
-    transition: all 0.3s ease;
-}
-.stat-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
+    padding: 20px;
+    border-radius: 0.75rem; /* Rounded corners */
     color: #fff;
-    flex-shrink: 0;
-}
-.stat-info .stat-label {
-    margin: 0;
-    color: #6c757d;
-    font-size: 0.9rem;
-}
-.stat-info .stat-value {
-    margin: 0;
-    font-weight: 600;
-    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
-/* Background colors for stat icons */
-.stat-icon.bg-primary { background-color: #0d6efd !important; }
-.stat-icon.bg-success { background-color: #198754 !important; }
-.stat-icon.bg-info { background-color: #0dcaf0 !important; }
-.stat-icon.bg-secondary { background-color: #6c757d !important; }
+.stat-box .inner {
+    position: relative;
+    z-index: 10;
+}
+
+.stat-box h3 {
+    font-size: 38px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.stat-box p {
+    font-size: 15px;
+}
+
+.stat-box .icon {
+    position: absolute;
+    top: auto;
+    bottom: 10px;
+    right: 15px;
+    z-index: 0;
+    font-size: 70px;
+    color: rgba(0, 0, 0, 0.15);
+    transition: all .3s linear;
+}
+
+.stat-box:hover .icon {
+    font-size: 75px;
+}
+
+.stat-box-footer {
+    position: relative;
+    text-align: center;
+    padding: 3px 0;
+    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.stat-box-footer:hover {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.stat-box.bg-primary { background-color: #0d6efd !important; }
+.stat-box.bg-success { background-color: #198754 !important; }
+.stat-box.bg-info { background-color: #0dcaf0 !important; }
+.stat-box.bg-secondary { background-color: #6c757d !important; }
