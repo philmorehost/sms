@@ -36,9 +36,13 @@ include 'includes/header.php';
                 case 'approved':
                     ?>
                     <label for="api_key" class="form-label">Your API Key</label>
+                    <div id="api-key-status"></div>
                     <div class="input-group">
                         <input type="text" id="api_key" class="form-control" value="<?php echo htmlspecialchars($api_user['api_key']); ?>" readonly>
                         <button class="btn btn-outline-secondary" id="copyApiBtn">Copy</button>
+                        <?php if ($api_user['api_access_status'] === 'approved'): ?>
+                        <button class="btn btn-outline-danger" id="regenerate-api-key">Regenerate</button>
+                        <?php endif; ?>
                     </div>
                     <small class="form-text text-muted">Keep your API key secret. Do not share it publicly.</small>
                     <?php
@@ -567,6 +571,7 @@ curl --location --request POST '<?php echo SITE_URL; ?>/api/voice_audio.php' \
 document.addEventListener('DOMContentLoaded', function () {
     const requestBtn = document.getElementById('requestApiAccessBtn');
     const copyBtn = document.getElementById('copyApiBtn');
+    const regenerateBtn = document.getElementById('regenerate-api-key');
 
     if (requestBtn) {
         requestBtn.addEventListener('click', function() {
@@ -579,7 +584,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Replace the button's parent container with the success message
                     const container = requestBtn.closest('.alert');
                     container.classList.remove('alert-warning', 'alert-danger');
                     container.classList.add('alert-info');
@@ -613,6 +617,31 @@ document.addEventListener('DOMContentLoaded', function () {
             }, (err) => {
                 alert('Failed to copy API key.');
             });
+        });
+    }
+
+    if (regenerateBtn) {
+        regenerateBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to regenerate your API key? Your old key will stop working immediately.')) {
+                fetch('ajax/regenerate_api_key.php', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const statusDiv = document.getElementById('api-key-status');
+                    if (data.success) {
+                        document.getElementById('api_key').value = data.api_key;
+                        statusDiv.innerHTML = '<div class="alert alert-success mt-3">New API key generated successfully!</div>';
+                    } else {
+                        statusDiv.innerHTML = '<div class="alert alert-danger mt-3">' + data.message + '</div>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const statusDiv = document.getElementById('api-key-status');
+                    statusDiv.innerHTML = '<div class="alert alert-danger mt-3">An error occurred while regenerating the key.</div>';
+                });
+            }
         });
     }
 });
