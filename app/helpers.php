@@ -365,14 +365,14 @@ function get_global_sms_price_for_number($number, $conn) {
     }
 
     if ($country_name) {
-        $stmt = $conn->prepare("SELECT MIN(price) as min_price FROM global_sms_pricing WHERE country = ?");
+        $stmt = $conn->prepare("SELECT AVG(price) as avg_price FROM global_sms_pricing WHERE country = ?");
         $stmt->bind_param("s", $country_name);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         $stmt->close();
-        if ($row && isset($row['min_price'])) {
-            return (float)$row['min_price'];
+        if ($row && isset($row['avg_price'])) {
+            return (float)$row['avg_price'];
         }
     }
 
