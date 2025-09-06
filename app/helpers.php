@@ -241,17 +241,13 @@ function debit_and_schedule_global_sms($user, $sender_id, $recipients, $message,
     $recipient_numbers = preg_split('/[\s,;\n]+/', $recipients, -1, PREG_SPLIT_NO_EMPTY);
 
     $total_cost = 0;
-    $global_profit_margin = (float)($settings['global_profit_percentage'] ?? 0.0);
-    $user_profit_margin = (float)($user['profit_percentage'] ?? 0.0);
-
     foreach ($recipient_numbers as $number) {
         $base_price = get_global_sms_price_for_number($number, $conn);
         if ($base_price === null) {
             return ['success' => false, 'message' => "Could not find a price for one of the numbers: {$number}."];
         }
-        $price_after_global_margin = $base_price * (1 + $global_profit_margin / 100);
-        $final_price = $price_after_global_margin * (1 + $user_profit_margin / 100);
-        $total_cost += $final_price;
+        // Use the base price directly without any markup, as per user request.
+        $total_cost += $base_price;
     }
 
     $global_wallet_currency = $settings['global_wallet_currency'] ?? 'EUR';
@@ -457,17 +453,14 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
     if ($route === 'global') {
         // --- Global Route Logic with Granular Pricing ---
         $total_cost = 0;
-        $global_profit_margin = (float)($settings['global_profit_percentage'] ?? 0.0);
-        $user_profit_margin = (float)($user['profit_percentage'] ?? 0.0);
 
         foreach ($recipient_numbers as $number) {
             $base_price = get_global_sms_price_for_number($number, $conn);
             if ($base_price === null) {
                 return ['success' => false, 'message' => "Could not find a price for one of the numbers: {$number}."];
             }
-            $price_after_global_margin = $base_price * (1 + $global_profit_margin / 100);
-            $final_price = $price_after_global_margin * (1 + $user_profit_margin / 100);
-            $total_cost += $final_price;
+            // Use the base price directly without any markup, as per user request.
+            $total_cost += $base_price;
         }
 
         $global_wallet_currency = $settings['global_wallet_currency'] ?? 'EUR';

@@ -21,9 +21,8 @@ if ($pricing_result) {
     while ($row = $pricing_result->fetch_assoc()) {
         $base_price = (float)$row['price'];
 
-        // 4. Calculate the final price with both profit margins
-        $price_with_global_margin = $base_price * (1 + ($global_profit_percentage / 100));
-        $final_price = $price_with_global_margin * (1 + ($user_profit_percentage / 100));
+        // 4. Calculate the final price. Per user request, we are now showing the base price.
+        $final_price = $base_price;
 
         $pricing_data[] = [
             'country' => $row['country'],

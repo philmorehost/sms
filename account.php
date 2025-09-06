@@ -130,9 +130,13 @@ include_once 'includes/header.php';
 
                     <!-- API Key -->
                     <h5 class="mt-4">Developer API Key</h5>
+                    <div id="api-key-status"></div>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($user['api_key']); ?>" readonly id="api-key-input">
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($user['api_key'] ?? 'Request API access from the API Docs page.'); ?>" readonly id="api-key-input">
                         <button class="btn btn-outline-secondary" type="button" id="copy-api-key">Copy</button>
+                        <?php if ($user['api_access_status'] === 'approved'): ?>
+                        <button class="btn btn-outline-danger" type="button" id="regenerate-api-key">Regenerate</button>
+                        <?php endif; ?>
                     </div>
                     <p><a href="api-docs.php">View API Documentation</a></p>
                 </div>
@@ -144,11 +148,38 @@ include_once 'includes/header.php';
 <script>
 document.getElementById('copy-api-key').addEventListener('click', function() {
     var apiKeyInput = document.getElementById('api-key-input');
-    apiKeyInput.select();
-    apiKeyInput.setSelectionRange(0, 99999); // For mobile devices
-    document.execCommand('copy');
-    alert('API Key copied to clipboard!');
+    if (apiKeyInput.value) {
+        apiKeyInput.select();
+        apiKeyInput.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand('copy');
+        alert('API Key copied to clipboard!');
+    }
 });
+
+<?php if ($user['api_access_status'] === 'approved'): ?>
+document.getElementById('regenerate-api-key').addEventListener('click', function() {
+    if (confirm('Are you sure you want to regenerate your API key? Your old key will stop working immediately.')) {
+        fetch('ajax/regenerate_api_key.php', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            const statusDiv = document.getElementById('api-key-status');
+            if (data.success) {
+                document.getElementById('api-key-input').value = data.api_key;
+                statusDiv.innerHTML = '<div class="alert alert-success">New API key generated successfully!</div>';
+            } else {
+                statusDiv.innerHTML = '<div class="alert alert-danger">' + data.message + '</div>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            const statusDiv = document.getElementById('api-key-status');
+            statusDiv.innerHTML = '<div class="alert alert-danger">An error occurred while regenerating the key.</div>';
+        });
+    }
+});
+<?php endif; ?>
 </script>
 
 <?php include_once 'includes/footer.php'; ?>

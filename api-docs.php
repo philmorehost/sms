@@ -36,9 +36,13 @@ include 'includes/header.php';
                 case 'approved':
                     ?>
                     <label for="api_key" class="form-label">Your API Key</label>
+                    <div id="api-key-status"></div>
                     <div class="input-group">
                         <input type="text" id="api_key" class="form-control" value="<?php echo htmlspecialchars($api_user['api_key']); ?>" readonly>
                         <button class="btn btn-outline-secondary" id="copyApiBtn">Copy</button>
+                        <?php if ($api_user['api_access_status'] === 'approved'): ?>
+                        <button class="btn btn-outline-danger" id="regenerate-api-key">Regenerate</button>
+                        <?php endif; ?>
                     </div>
                     <small class="form-text text-muted">Keep your API key secret. Do not share it publicly.</small>
                     <?php
@@ -74,6 +78,82 @@ include 'includes/header.php';
                     break;
             }
             ?>
+        </div>
+
+        <hr>
+
+        <h4 class="card-title mt-4">API Response Codes</h4>
+        <p>The API returns standard response codes. A successful request will have an <code>error_code</code> of <code>"000"</code>. Below are some of the common error codes you might encounter.</p>
+
+        <div class="accordion" id="errorCodeAccordion">
+            <!-- General Errors -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingGeneral">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGeneral" aria-expanded="false" aria-controls="collapseGeneral">
+                        General & Authentication Errors
+                    </button>
+                </h2>
+                <div id="collapseGeneral" class="accordion-collapse collapse" aria-labelledby="headingGeneral" data-bs-parent="#errorCodeAccordion">
+                    <div class="accordion-body">
+                        <table class="table table-sm table-bordered">
+                            <thead><tr><th>Error Code</th><th>Meaning</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>401</code></td><td>Authentication failed. The provided API token is invalid or your account is not approved for API access.</td></tr>
+                                <tr><td><code>405</code></td><td>Invalid request method. You used a GET request where a POST was expected, or vice-versa.</td></tr>
+                                <tr><td><code>400</code></td><td>A generic error for a bad request. This is often accompanied by a more specific message.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- SMS API Errors -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSms">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSms" aria-expanded="false" aria-controls="collapseSms">
+                        SMS & Voice API Errors
+                    </button>
+                </h2>
+                <div id="collapseSms" class="accordion-collapse collapse" aria-labelledby="headingSms" data-bs-parent="#errorCodeAccordion">
+                    <div class="accordion-body">
+                        <p>These errors apply to the standard SMS, Corporate SMS, and Voice (Text-to-Speech/Audio) APIs.</p>
+                        <table class="table table-sm table-bordered">
+                            <thead><tr><th>Error Code</th><th>Meaning</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>107</code></td><td>Insufficient balance in your main wallet to send the message.</td></tr>
+                                <tr><td><code>110</code></td><td>The message content includes a word that is on the banned words list.</td></tr>
+                                <tr><td>N/A</td><td>Other errors are returned with a descriptive message, such as "Sender ID is required" or "Recipients are required."</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Global SMS API Errors -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingGlobalSms">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGlobalSms" aria-expanded="false" aria-controls="collapseGlobalSms">
+                        Global SMS API Errors
+                    </button>
+                </h2>
+                <div id="collapseGlobalSms" class="accordion-collapse collapse" aria-labelledby="headingGlobalSms" data-bs-parent="#errorCodeAccordion">
+                    <div class="accordion-body">
+                        <p>These errors are specific to the Global SMS route, which uses a different gateway.</p>
+                        <table class="table table-sm table-bordered">
+                            <thead><tr><th>Error Code</th><th>Meaning</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>108</code></td><td>Insufficient balance in your Global Wallet.</td></tr>
+                                <tr><td><code>109</code></td><td>A price could not be found for one of the destination numbers.</td></tr>
+                                <tr><td><code>1703</code></td><td>Invalid gateway username or password. This is a configuration issue for the site administrator.</td></tr>
+                                <tr><td><code>1705</code></td><td>Invalid message content.</td></tr>
+                                <tr><td><code>1706</code></td><td>Invalid destination number(s).</td></tr>
+                                <tr><td><code>1707</code></td><td>Invalid Sender ID (Source).</td></tr>
+                                <tr><td><code>1709</code></td><td>User validation failed. This may happen if the server's IP address is not whitelisted by the gateway provider.</td></tr>
+                                <tr><td><code>1025</code></td><td>Insufficient credit with the gateway provider. This is an issue for the site administrator to resolve.</td></tr>
+                                <tr><td>N/A</td><td>Other errors, such as "Global SMS API is not configured," are returned with a descriptive message.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <hr>
@@ -181,6 +261,41 @@ curl --location --request POST '<?php echo SITE_URL; ?>/api/corporate.php' \
             </code></pre>
         </div>
         <!-- End Send Corporate SMS Endpoint -->
+
+        <!-- Send Global SMS Endpoint -->
+        <div id="send-global-sms" class="api-endpoint">
+            <h5>Send Global SMS</h5>
+            <p>
+                <span class="method text-info">POST</span>
+                <span class="url"><?php echo SITE_URL; ?>/api/global-sms.php</span>
+            </p>
+            <p>This endpoint sends a message to international numbers. Pricing is variable and depends on the destination country. Funds are deducted from your <strong>Global Wallet</strong>.</p>
+
+            <h6>Parameters</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                     <thead>
+                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>token</code></td><td>string</td><td><strong>Required.</strong> Your API Key.</td></tr>
+                        <tr><td><code>senderID</code></td><td>string</td><td><strong>Required.</strong> An approved Sender ID.</td></tr>
+                        <tr><td><code>recipients</code></td><td>string</td><td><strong>Required.</strong> A comma-separated list of recipient phone numbers with international dialing codes.</td></tr>
+                        <tr><td><code>message</code></td><td>string</td><td><strong>Required.</strong> The content of the SMS message.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+             <h6>Example Request (cURL)</h6>
+            <pre><code>
+curl --location --request POST '<?php echo SITE_URL; ?>/api/global-sms.php' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'token=<?php echo htmlspecialchars($api_user['api_key']); ?>' \
+--data-urlencode 'senderID=YourSenderID' \
+--data-urlencode 'recipients=447911123456' \
+--data-urlencode 'message=This is a test of the Global SMS API.'
+            </code></pre>
+        </div>
+        <!-- End Send Global SMS Endpoint -->
 
         <!-- Send Voice SMS Endpoint -->
         <div id="send-voice" class="api-endpoint">
@@ -456,6 +571,7 @@ curl --location --request POST '<?php echo SITE_URL; ?>/api/voice_audio.php' \
 document.addEventListener('DOMContentLoaded', function () {
     const requestBtn = document.getElementById('requestApiAccessBtn');
     const copyBtn = document.getElementById('copyApiBtn');
+    const regenerateBtn = document.getElementById('regenerate-api-key');
 
     if (requestBtn) {
         requestBtn.addEventListener('click', function() {
@@ -468,7 +584,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Replace the button's parent container with the success message
                     const container = requestBtn.closest('.alert');
                     container.classList.remove('alert-warning', 'alert-danger');
                     container.classList.add('alert-info');
@@ -502,6 +617,31 @@ document.addEventListener('DOMContentLoaded', function () {
             }, (err) => {
                 alert('Failed to copy API key.');
             });
+        });
+    }
+
+    if (regenerateBtn) {
+        regenerateBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to regenerate your API key? Your old key will stop working immediately.')) {
+                fetch('ajax/regenerate_api_key.php', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const statusDiv = document.getElementById('api-key-status');
+                    if (data.success) {
+                        document.getElementById('api_key').value = data.api_key;
+                        statusDiv.innerHTML = '<div class="alert alert-success mt-3">New API key generated successfully!</div>';
+                    } else {
+                        statusDiv.innerHTML = '<div class="alert alert-danger mt-3">' + data.message + '</div>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const statusDiv = document.getElementById('api-key-status');
+                    statusDiv.innerHTML = '<div class="alert alert-danger mt-3">An error occurred while regenerating the key.</div>';
+                });
+            }
         });
     }
 });
