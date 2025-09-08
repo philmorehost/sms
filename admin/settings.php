@@ -876,6 +876,14 @@ include 'includes/header.php';
                     </div>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Send Weekly User Reports (Recommended: Once weekly, e.g., Monday at 2 AM)</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="<?php echo 'wget -q -O - ' . SITE_URL . '/cron/send_weekly_reports.php'; ?>" readonly>
+                        <button class="btn btn-outline-secondary copy-btn" type="button">Copy</button>
+                    </div>
+                </div>
+
                 <hr>
                 <h5>How to Set Up Cron Jobs in cPanel</h5>
                 <ol>
